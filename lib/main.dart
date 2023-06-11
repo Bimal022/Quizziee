@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -32,9 +33,16 @@ void main() {
 void handleClick(int item) {
   switch (item) {
     case 0:
-      final Uri url = Uri.parse('https://flutter.dev');
+      final Uri url =
+          Uri.parse('https://github.com/Bimal022/Quizziee/tree/master');
       break;
     case 1:
+      FlutterShare.share(
+          title: 'Check out Quizzler - The Ultimate Quiz App!',
+          text:
+              'Discover Quizzler - the ultimate quiz app that will put your knowledge to the test! Challenge your friends, explore various categories, and see who reigns as the ultimate trivia champion. Download now and embark on an exciting journey of learning and fun!',
+          linkUrl: 'https://github.com/Bimal022/Quizziee/tree/master',
+          chooserTitle: 'Check out Quizzler - The Ultimate Quiz App!');
       break;
   }
 }
@@ -46,6 +54,15 @@ class QuizLayout extends StatefulWidget {
   State<QuizLayout> createState() => _QuizLayoutState();
 }
 
+List<String> questionsList = [
+  'How are you',
+  'White is the colour of milk',
+  'Sky colour is white'
+      'Your name is Pappu'
+];
+int qnsNumber = 0;
+List<Widget> crossCheck = [];
+
 class _QuizLayoutState extends State<QuizLayout> {
   @override
   Widget build(BuildContext context) {
@@ -53,13 +70,13 @@ class _QuizLayoutState extends State<QuizLayout> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Expanded(
+        Expanded(
           flex: 5,
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                "Your questions will appear here!",
+                questionsList[qnsNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
@@ -79,7 +96,11 @@ class _QuizLayoutState extends State<QuizLayout> {
                     fontSize: 20.0,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    qnsNumber++;
+                  });
+                },
               ),
             ),
           ),
@@ -97,11 +118,18 @@ class _QuizLayoutState extends State<QuizLayout> {
                     fontSize: 20.0,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    qnsNumber++;
+                  });
+                },
               ),
             ),
           ),
         ),
+        Row(
+          children: crossCheck,
+        )
       ],
     );
   }
